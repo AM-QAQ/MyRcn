@@ -1,141 +1,69 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
+import "@/assets/styles/views.css"
 
-const activeTab = ref('1')
+const activeTab = ref('安卓')
+const showBackTop = ref(false)
+
 const tabs = [
-  { id: 'tab1', label: '1' },
-  { id: 'tab2', label: '2' },
-  { id: 'tab3', label: '3' },
-  { id: 'tab4', label: '4' }
+  { id: 'tab1', label: '安卓' },
+  { id: 'tab2', label: 'IOS' },
+  { id: 'tab3', label: 'PC' },
+  { id: 'tab4', label: '反馈' }
 ]
+
+const handleScroll = () => {
+  showBackTop.value = window.scrollY > 300
+}
+
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  })
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <template>
-  <div class="download-view">
+  <div class="pro-view">
     <div class="tabs">
-      <button 
-        v-for="tab in tabs" 
-        :key="tab.id"
-        :class="['tab-btn', { active: activeTab === tab.label }]"
-        @click="activeTab = tab.label"
-      >
+      <button v-for="tab in tabs" :key="tab.id" :class="['tab-btn', { active: activeTab === tab.label }]"
+        @click="activeTab = tab.label">
         {{ tab.label }}
       </button>
     </div>
 
     <div class="tab-content">
-      <div v-if="activeTab === '1'" class="tab-pane">
+      <div v-if="activeTab === '安卓'" class="tab-pane">
         <p>The web page is in production....</p>
       </div>
-      <div v-if="activeTab === '2'" class="tab-pane">
+
+      <div v-if="activeTab === 'IOS'" class="tab-pane">
         <p>The web page is in production....</p>
       </div>
-      <div v-if="activeTab === '3'" class="tab-pane">
+
+      <div v-if="activeTab === 'PC'" class="tab-pane">
         <p>The web page is in production....</p>
       </div>
-      <div v-if="activeTab === '4'" class="tab-pane">
+
+      <div v-if="activeTab === '反馈'" class="tab-pane">
         <p>The web page is in production....</p>
       </div>
     </div>
+
+    <!-- 返回顶部按钮 -->
+    <button v-show="showBackTop" class="back-to-top" @click="scrollToTop" title="返回顶部">
+      ↑
+    </button>
   </div>
 </template>
 
-<style scoped>
-.download-view {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.tabs {
-  display: flex;
-  gap: 1rem;
-  border-bottom: 2px solid #2f2f3d;
-  padding-bottom: 0.5rem;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
-}
-
-.tabs::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
-}
-
-.tab-btn {
-  background: none;
-  border: none;
-  color: #FFFFFF;
-  font-size: 1rem;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  white-space: nowrap;
-  min-width: max-content;
-}
-
-.tab-btn::after {
-  content: '';
-  position: absolute;
-  bottom: -0.5rem;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: #636bfb;
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
-}
-
-.tab-btn.active {
-  color: #636bfb;
-}
-
-.tab-btn.active::after {
-  transform: scaleX(1);
-}
-
-/* 移动端适配 */
-@media (max-width: 768px) {
-  .tabs {
-    gap: 0.5rem;
-    padding: 0.5rem;
-    margin: 0 -0.5rem;
-  }
-
-  .tab-btn {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.9rem;
-  }
-}
-
-/* 超小屏幕适配 */
-@media (max-width: 360px) {
-  .tabs {
-    gap: 0.25rem;
-  }
-
-  .tab-btn {
-    padding: 0.5rem;
-  }
-}
-
-.tab-content {
-  padding: 1rem 0;
-}
-
-.tab-pane {
-  animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-</style> 
+<style scoped></style>

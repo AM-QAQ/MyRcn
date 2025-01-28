@@ -22,7 +22,7 @@
 .tab-btn {
     background: none;
     border: none;
-    color: #FFFFFF;
+    color: var(--text-primary);
     font-size: 1rem;
     padding: 0.5rem 1rem;
     cursor: pointer;
@@ -70,7 +70,7 @@
 }
 
 .tab-btn.active {
-    color: #636bfb;
+    color: var(--accent-color);
 }
 
 .tab-btn.active::after {
@@ -154,7 +154,7 @@
 }
 
 .faq-answer {
-    color: #FFFFFF;
+    color: var(--text-primary);
     line-height: 1.6;
     padding-left: calc(2rem + 1.5rem);
 }
@@ -202,11 +202,11 @@
 .step-title {
     font-size: 1.25rem;
     font-weight: 500;
-    color: #FFFFFF;
+    color: var(--text-primary);
 }
 
 .step-content {
-    color: #FFFFFF;
+    color: var(--text-primary);
     line-height: 1.6;
 }
 
@@ -261,7 +261,7 @@
     align-items: center;
     gap: 1rem;
     font-size: 1.25rem;
-    color: #FFFFFF;
+    color: var(--text-primary);
 }
 
 .method-badge {
@@ -299,7 +299,7 @@
     gap: 0.5rem;
     position: relative;
     padding-left: 2.5rem;
-    color: #FFFFFF;
+    color: var(--text-primary);
 }
 
 .step-marker {
@@ -324,7 +324,7 @@
     padding: 1rem;
     border-radius: 8px;
     margin-top: 1rem;
-    color: #FFFFFF;
+    color: var(--text-primary);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -361,7 +361,7 @@
 
 .group-info {
     text-align: center;
-    color: #FFFFFF;
+    color: var(--text-primary);
 }
 
 .group-title {
@@ -377,7 +377,7 @@
     background: rgba(99, 107, 251, 0.1);
     padding: 1rem;
     border-radius: 8px;
-    color: #FFFFFF;
+    color: var(--text-primary);
     text-decoration: none;
     display: block;
     transition: all 0.3s ease;
@@ -413,4 +413,14 @@
         right: 1rem;
         bottom: 1rem;
     }
+}
+
+.rules-list li {
+    position: relative;
+    padding-left: 1.5rem;
+    color: var(--text-primary);
+}
+
+.value {
+    color: var(--text-primary);
 }

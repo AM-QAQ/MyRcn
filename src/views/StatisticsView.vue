@@ -1,16 +1,39 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import "@/assets/styles/views.css"
 
 const activeTab = ref('网站统计')
+const runningTime = ref('')
+
 const tabs = [
   { id: 'tab1', label: '网站统计' },
   { id: 'tab3', label: '反馈' },
   { id: 'tab4', label: '其他' }
 ]
+
+// 计算网站运行时间
+const calculateRunningTime = () => {
+  const startDate = new Date('2025-01-28') // 网站启动日期
+  const now = new Date()
+  const diff = now - startDate
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000)
+
+  runningTime.value = `${days}天 ${hours}小时 ${minutes}分钟 ${seconds}秒`
+}
+
+onMounted(() => {
+  calculateRunningTime()
+  // 每秒更新一次运行时间
+  setInterval(calculateRunningTime, 1000)
+})
 </script>
 
 <template>
-  <div class="statistics-view">
+  <div class="pro-view">
     <div class="tabs">
       <button v-for="tab in tabs" :key="tab.id" :class="['tab-btn', { active: activeTab === tab.label }]"
         @click="activeTab = tab.label">
@@ -20,11 +43,36 @@ const tabs = [
 
     <div class="tab-content">
       <div v-if="activeTab === '网站统计'" class="tab-pane">
-        <p>The web page is in production....</p>
+        <div class="stats-grid">
+          <div class="stats-card">
+            <div class="card-header">
+              <h3>网站运行时间</h3>
+            </div>
+            <div class="card-content">
+              <div class="running-time">
+                <div class="time-value">{{ runningTime }}</div>
+                <div class="time-label">自 2024-01-15 起</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div v-if="activeTab === '反馈'" class="tab-pane">
-        <p>The web page is in production....</p>
+        <div class="feedback-container">
+          <div class="feedback-card">
+            <div class="group-info">
+              <div class="group-title">网网站邮箱反馈</div>
+              <a href="mailto:k26373165@gmail.com?subject=网站反馈&body=请在此处输入您的反馈内容..."
+                target="_blank" 
+                class="group-number"
+                title="点击发送邮件"
+              >
+                k26373165@gmail.com
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div v-if="activeTab === '其他'" class="tab-pane">
@@ -35,60 +83,6 @@ const tabs = [
 </template>
 
 <style scoped>
-.statistics-view {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.tabs {
-  display: flex;
-  gap: 1rem;
-  border-bottom: 2px solid #2f2f3d;
-  padding-bottom: 0.5rem;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.tabs::-webkit-scrollbar {
-  display: none;
-}
-
-.tab-btn {
-  background: none;
-  border: none;
-  color: #FFFFFF;
-  font-size: 1rem;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  white-space: nowrap;
-  min-width: max-content;
-}
-
-.tab-btn::after {
-  content: '';
-  position: absolute;
-  bottom: -0.5rem;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: #636bfb;
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
-}
-
-.tab-btn.active {
-  color: #636bfb;
-}
-
-.tab-btn.active::after {
-  transform: scaleX(1);
-}
-
 .stats-card {
   background: linear-gradient(145deg, rgba(99, 107, 251, 0.05), rgba(99, 107, 251, 0.02));
   border-radius: 12px;
@@ -109,7 +103,7 @@ const tabs = [
 
 .card-header h3 {
   margin: 0;
-  color: #636bfb;
+  color: var(--accent-color);
   font-size: 1.25rem;
   font-weight: 500;
 }
@@ -129,16 +123,16 @@ const tabs = [
 }
 
 .label {
-  color: #888;
+  color: var(--text-secondary);
   min-width: 120px;
 }
 
 .value {
-  color: #FFFFFF;
+  color: var(--text-primary);
 }
 
 .value.highlight {
-  color: #636bfb;
+  color: var(--accent-color);
   font-weight: 500;
 }
 
@@ -154,37 +148,76 @@ const tabs = [
 .rules-list li {
   position: relative;
   padding-left: 1.5rem;
-  color: #FFFFFF;
+  color: var(--text-primary);
 }
 
 .rules-list li::before {
   content: '•';
   position: absolute;
   left: 0;
-  color: #636bfb;
+  color: var(--accent-color);
+}
+
+.stats-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+}
+
+.visitor-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  text-align: center;
+}
+
+.stats-item {
+  padding: 1rem;
+  background: rgba(99, 107, 251, 0.05);
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.stats-item:hover {
+  transform: translateY(-4px);
+}
+
+.stats-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.stats-value.highlight {
+  color: var(--accent-color);
+}
+
+.stats-label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.running-time {
+  text-align: center;
+  padding: 2rem;
+}
+
+.time-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+  font-family: monospace;
+}
+
+.time-label {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
 }
 
 /* 移动端适配 */
 @media (max-width: 768px) {
-  .tabs {
-    gap: 0.5rem;
-    padding: 0.5rem;
-    margin: 0 -0.5rem;
-  }
-
-  .tab-btn {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.9rem;
-  }
-
-  .card-header {
-    padding: 1rem;
-  }
-
-  .card-content {
-    padding: 1rem;
-  }
-
   .info-item {
     flex-direction: column;
     gap: 0.5rem;
@@ -193,36 +226,17 @@ const tabs = [
   .label {
     min-width: auto;
   }
-}
 
-/* 超小屏幕适配 */
-@media (max-width: 360px) {
-  .tabs {
-    gap: 0.25rem;
+  .visitor-stats {
+    grid-template-columns: 1fr;
   }
 
-  .tab-btn {
-    padding: 0.5rem;
-  }
-}
-
-.tab-content {
-  padding: 1rem 0;
-}
-
-.tab-pane {
-  animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+  .stats-item {
+    padding: 0.75rem;
   }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  .time-value {
+    font-size: 1.5rem;
   }
 }
 </style>

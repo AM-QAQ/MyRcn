@@ -316,8 +316,8 @@ const menuItems = [
   .mobile-toggle-btn {
     display: flex;
     position: fixed;
-    left: 0.5rem;
-    top: 1rem;
+    left: 1rem;
+    top: 10px; /* 标题栏高60px，按钮高40px，(60-40)/2=10px */
     width: 40px;
     height: 40px;
     background-color: var(--bg-secondary);
@@ -333,11 +333,11 @@ const menuItems = [
 
   .mobile-toggle-btn:hover {
     background-color: var(--bg-hover);
-    transform: scale(1.1);
+    transform: translateY(-2px);
   }
 
   .mobile-toggle-btn:active {
-    transform: scale(0.95);
+    transform: translateY(2px);
   }
 
   .sidebar {
