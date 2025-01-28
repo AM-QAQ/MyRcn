@@ -1,13 +1,35 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
+import "@/assets/styles/views.css"
 
 const activeTab = ref('购买')
+const showBackTop = ref(false)
+
 const tabs = [
     { id: 'tab1', label: '购买' },
     { id: 'tab2', label: '使用' },
     { id: 'tab3', label: '问题' },
     { id: 'tab4', label: '反馈' }
 ]
+
+const handleScroll = () => {
+    showBackTop.value = window.scrollY > 300
+}
+
+const scrollToTop = () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    })
+}
+
+onMounted(() => {
+    window.addEventListener('scroll', handleScroll)
+})
+
+onUnmounted(() => {
+    window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <template>
@@ -25,10 +47,11 @@ const tabs = [
                     <div class="step-card">
                         <div class="step-header">
                             <div class="step-number">01</div>
-                            <div class="step-title">访问服务网站</div>
+                            <div class="step-title">访问Pro网站</div>
                         </div>
                         <div class="step-content">
-                            <p>在浏览器输入 <a href="https://service.rw.der.kim" target="_blank" class="highlight-link">service.rw.der.kim</a></p>
+                            <p>在浏览器输入 <a href="https://dash.rw.der.kim" target="_blank"
+                                    class="highlight-link">dash.rw.der.kim</a>进入登录界面</p>
                             <div class="img-container">
                                 <img src="@/assets/img/pro/buying-1.png" alt="buying-加载失败">
                             </div>
@@ -41,7 +64,7 @@ const tabs = [
                             <div class="step-title">注册账号</div>
                         </div>
                         <div class="step-content">
-                            <p>点击<span class="highlight">立即开始</span>或<span class="highlight">登录</span>，进入登录界面<span class="highlight">注册账号</span></p>
+                            <p>点击<span class="highlight">注册账号</span>，进行账号注册</p>
                             <div class="warning-text">请牢记您的账号密码，这很重要</div>
                             <div class="img-container">
                                 <img src="@/assets/img/pro/buying-2.png" alt="buying-加载失败">
@@ -55,7 +78,11 @@ const tabs = [
                             <div class="step-title">充值服务</div>
                         </div>
                         <div class="step-content">
-                            <p>在左侧菜单栏选择<span class="highlight">服务->钱包->自助充值</span>，根据需要购买的套餐充值对应的金额<span class="highlight">(6/月)</span></p>
+                            <p>在左侧菜单栏选择<span class="highlight">服务->钱包->自助充值</span>，根据需要购买的套餐充值对应的金额：
+                                <li>0.5r - 天</li>
+                                <li>6r - 月</li>
+                                <li>46r - 年</li>
+                            </p>
                             <div class="img-container">
                                 <img src="@/assets/img/pro/buying-8.png" alt="buying-加载失败">
                             </div>
@@ -104,9 +131,10 @@ const tabs = [
                             <div class="usage-step">
                                 <div class="step-text">
                                     <span class="step-marker">1</span>
-                                    <p>在左侧菜单选择<span class="highlight">RCN-Pro->绑定</span>，确定"快速绑定/慢速绑定修改"为<span class="highlight">启用</span></p>
+                                    <p>在左侧菜单选择<span class="highlight">RCN-Pro->绑定</span>，确定"快速绑定/慢速绑定修改"为<span
+                                            class="highlight">启用</span></p>
                                     <div class="warning-text">默认就是启用状态</div>
-                                    <p>以防万一，手动更新一下IP</p>
+                                    <p>以防万一，可手动更新一下IP</p>
                                 </div>
                                 <div class="img-container">
                                     <img src="@/assets/img/pro/use-1.png" alt="使用说明图片">
@@ -150,9 +178,10 @@ const tabs = [
                             <div class="usage-step">
                                 <div class="step-text">
                                     <span class="step-marker">1</span>
-                                    <p>在左侧菜单选择<span class="highlight">RCN-Pro->绑定</span>，确定"快速绑定/慢速绑定修改"为<span class="highlight">禁用</span></p>
+                                    <p>在左侧菜单选择<span class="highlight">RCN-Pro->绑定</span>，确定"快速绑定/慢速绑定修改"为<span
+                                            class="highlight">禁用</span></p>
                                     <p>并复制下方<span class="highlight">慢速绑定码</span></p>
-                                    <div class="warning-text">注意不要向他人暴露您的慢速绑定码</div>
+                                    <div class="warning-text">请不要向他人暴露您的慢速绑定码</div>
                                 </div>
                                 <div class="img-container">
                                     <img src="@/assets/img/pro/use-5.png" alt="图片加载失败">
@@ -239,16 +268,17 @@ const tabs = [
                     <div class="feedback-card">
                         <div class="group-info">
                             <div class="group-title">RELAY-CN交流群</div>
-                            <a href="https://qm.qq.com/cgi-bin/qm/qr?k=YvFmSPDhRGBGVgEbZXFxVtHLGxvZZxeL&jump_from=webapi&authKey=Hs0XSXw+kRH6/+YHEkZQvJXBxVhkxZRQFLuQvbmEo+Ry+6QvHJPNBUQaGXKv5Vqj" target="_blank" class="group-number">
+                            <a href="https://qm.qq.com/q/ncj4vfZ3OM" target="_blank" class="group-number"
+                                title="点击加入群聊">
                                 885925961
                             </a>
                         </div>
                     </div>
-                    
+
                     <div class="feedback-card">
                         <div class="group-info">
                             <div class="group-title">Pro交流群</div>
-                            <a href="https://qm.qq.com/cgi-bin/qm/qr?k=YvFmSPDhRGBGVgEbZXFxVtHLGxvZZxeL&jump_from=webapi&authKey=Hs0XSXw+kRH6/+YHEkZQvJXBxVhkxZRQFLuQvbmEo+Ry+6QvHJPNBUQaGXKv5Vqj" target="_blank" class="group-number">
+                            <a href="" target="_blank" class="group-number" title="请手动加入">
                                 414204970
                             </a>
                         </div>
@@ -256,399 +286,12 @@ const tabs = [
                 </div>
             </div>
         </div>
+
+        <!-- 返回顶部按钮 -->
+        <button v-show="showBackTop" class="back-to-top" @click="scrollToTop" title="返回顶部">
+            ↑
+        </button>
     </div>
 </template>
 
-<style scoped>
-.pro-view {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.tabs {
-    display: flex;
-    gap: 1rem;
-    border-bottom: 2px solid #2f2f3d;
-    padding-bottom: 0.5rem;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
-}
-
-.tabs::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
-}
-
-.tab-btn {
-    background: none;
-    border: none;
-    color: #FFFFFF;
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    white-space: nowrap;
-    min-width: max-content;
-}
-
-/* 移动端适配 */
-@media (max-width: 768px) {
-    .tabs {
-        gap: 0.5rem;
-        padding: 0.5rem;
-        margin: 0 -0.5rem;
-    }
-
-    .tab-btn {
-        padding: 0.5rem 0.75rem;
-        font-size: 0.9rem;
-    }
-}
-
-/* 超小屏幕适配 */
-@media (max-width: 360px) {
-    .tabs {
-        gap: 0.25rem;
-    }
-
-    .tab-btn {
-        padding: 0.5rem;
-    }
-}
-
-.tab-btn::after {
-    content: '';
-    position: absolute;
-    bottom: -0.5rem;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: #636bfb;
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-}
-
-.tab-btn.active {
-    color: #636bfb;
-}
-
-.tab-btn.active::after {
-    transform: scaleX(1);
-}
-
-.tab-content {
-    padding: 1rem 0;
-}
-
-.tab-pane {
-    animation: fadeIn 0.3s ease;
-}
-
-.img-container {
-    max-width: 100%;
-    /* 容器最大宽度为100% */
-    text-align: left;
-    /* buying-居中显示 */
-    margin: 20px 0;
-    /* buying-上下留白 */
-}
-
-.img-container img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* FAQ样式 */
-.faq-container {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.faq-item {
-    background-color: rgba(99, 107, 251, 0.05);
-    border-radius: 8px;
-    padding: 1.5rem;
-    border: 1px solid rgba(99, 107, 251, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.faq-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(99, 107, 251, 0.1);
-}
-
-.faq-question {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    color: #636bfb;
-    font-weight: 500;
-}
-
-.question-number {
-    background-color: #636bfb;
-    color: white;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    font-size: 0.9rem;
-}
-
-.question-text {
-    font-size: 1.1rem;
-    line-height: 1.5;
-}
-
-.faq-answer {
-    color: #FFFFFF;
-    line-height: 1.6;
-    padding-left: calc(2rem + 1.5rem);
-}
-
-.faq-answer .img-container {
-    margin: 1rem 0;
-}
-
-/* 购买部分样式 */
-.purchase-guide {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.step-card {
-    background: linear-gradient(145deg, rgba(99, 107, 251, 0.05), rgba(99, 107, 251, 0.02));
-    border-radius: 12px;
-    padding: 1.5rem;
-    border: 1px solid rgba(99, 107, 251, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.step-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(99, 107, 251, 0.1);
-}
-
-.step-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-.step-number {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #636bfb;
-    background: rgba(99, 107, 251, 0.1);
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-}
-
-.step-title {
-    font-size: 1.25rem;
-    font-weight: 500;
-    color: #FFFFFF;
-}
-
-.step-content {
-    color: #FFFFFF;
-    line-height: 1.6;
-}
-
-.highlight {
-    color: #636bfb;
-    font-weight: 500;
-}
-
-.highlight-link {
-    color: #636bfb;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-.highlight-link:hover {
-    color: #8389ff;
-}
-
-.warning-text {
-    color: #ff6b6b;
-    margin: 0.5rem 0;
-    font-style: italic;
-}
-
-/* 使用部分样式 */
-.usage-guide {
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-}
-
-.method-card {
-    background: linear-gradient(145deg, rgba(99, 107, 251, 0.05), rgba(99, 107, 251, 0.02));
-    border-radius: 12px;
-    padding: 2rem;
-    border: 1px solid rgba(99, 107, 251, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.method-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(99, 107, 251, 0.1);
-}
-
-.method-header {
-    margin-bottom: 2rem;
-}
-
-.method-title {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    font-size: 1.25rem;
-    color: #FFFFFF;
-}
-
-.method-badge {
-    background: #636bfb;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    font-size: 1rem;
-    font-weight: 500;
-}
-
-.recommend-badge {
-    background: #ff6b6b;
-    color: white;
-    padding: 0.25rem 0.75rem;
-    border-radius: 4px;
-    font-size: 0.9rem;
-}
-
-.method-content {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.usage-step {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.step-text {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    position: relative;
-    padding-left: 2.5rem;
-    color: #FFFFFF;
-}
-
-.step-marker {
-    position: absolute;
-    left: 0;
-    background: rgba(99, 107, 251, 0.1);
-    color: #636bfb;
-    width: 1.75rem;
-    height: 1.75rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    font-weight: bold;
-}
-
-.usage-note {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 1rem;
-    border-radius: 8px;
-    margin-top: 1rem;
-    color: #FFFFFF;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.usage-note:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(99, 107, 251, 0.1);
-}
-
-.note-icon {
-    font-size: 1.25rem;
-}
-
-/* 反馈部分样式 */
-.feedback-container {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.feedback-card {
-    background: linear-gradient(145deg, rgba(99, 107, 251, 0.05), rgba(99, 107, 251, 0.02));
-    border-radius: 12px;
-    padding: 2rem;
-    border: 1px solid rgba(99, 107, 251, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.feedback-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(99, 107, 251, 0.1);
-}
-
-.group-info {
-    text-align: center;
-    color: #FFFFFF;
-}
-
-.group-title {
-    font-size: 1.25rem;
-    font-weight: 500;
-    margin-bottom: 1rem;
-    color: #636bfb;
-}
-
-.group-number {
-    font-size: 1.5rem;
-    font-weight: bold;
-    background: rgba(99, 107, 251, 0.1);
-    padding: 1rem;
-    border-radius: 8px;
-    color: #FFFFFF;
-    text-decoration: none;
-    display: block;
-    transition: all 0.3s ease;
-}
-
-.group-number:hover {
-    background: rgba(99, 107, 251, 0.2);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(99, 107, 251, 0.1);
-}
-</style>
+<style scoped></style>

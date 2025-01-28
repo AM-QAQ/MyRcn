@@ -124,6 +124,8 @@ const applyTheme = (dark) => {
   z-index: 50;
   transition: all 0.3s ease;
   border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 4px 12px -4px var(--shadow-color);
+  backdrop-filter: blur(8px);
 }
 
 .main-wrapper.collapsed .title-bar {

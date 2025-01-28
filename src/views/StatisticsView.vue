@@ -1,109 +1,34 @@
 <script setup>
 import { ref } from 'vue'
 
-const activeTab = ref('签到')
+const activeTab = ref('网站统计')
 const tabs = [
-  { id: 'tab1', label: '签到' },
-  { id: 'tab2', label: '规则' },
-  { id: 'tab3', label: '使用统计' },
-  { id: 'tab4', label: '其他数据' }
+  { id: 'tab1', label: '网站统计' },
+  { id: 'tab3', label: '反馈' },
+  { id: 'tab4', label: '其他' }
 ]
 </script>
 
 <template>
   <div class="statistics-view">
     <div class="tabs">
-      <button 
-        v-for="tab in tabs" 
-        :key="tab.id"
-        :class="['tab-btn', { active: activeTab === tab.label }]"
-        @click="activeTab = tab.label"
-      >
+      <button v-for="tab in tabs" :key="tab.id" :class="['tab-btn', { active: activeTab === tab.label }]"
+        @click="activeTab = tab.label">
         {{ tab.label }}
       </button>
     </div>
 
     <div class="tab-content">
-      <div v-if="activeTab === '签到'" class="tab-pane">
-        <div class="stats-card signin-info">
-          <div class="card-header">
-            <h3>签到信息</h3>
-          </div>
-          <div class="card-content">
-            <div class="info-item">
-              <span class="label">上次签到时间:</span>
-              <span class="value">2024-11-11 7:21:5</span>
-            </div>
-            <div class="info-item">
-              <span class="label">连续签到天数:</span>
-              <span class="value highlight">1天</span>
-            </div>
-            <div class="info-item">
-              <span class="label">Pro会员状态:</span>
-              <span class="value">未解锁一个月Pro</span>
-            </div>
-          </div>
-        </div>
+      <div v-if="activeTab === '网站统计'" class="tab-pane">
+        <p>The web page is in production....</p>
       </div>
 
-      <div v-if="activeTab === '规则'" class="tab-pane">
-        <div class="stats-card">
-          <div class="card-header">
-            <h3>签到规则</h3>
-          </div>
-          <div class="card-content">
-            <ul class="rules-list">
-              <li>每日签到可获得奖励</li>
-              <li>连续签到14天，获得一个月Pro(一次性)</li>
-              <li>断签会重置连续签到天数</li>
-              <li>每月1号重置签到状态</li>
-            </ul>
-          </div>
-        </div>
+      <div v-if="activeTab === '反馈'" class="tab-pane">
+        <p>The web page is in production....</p>
       </div>
 
-      <div v-if="activeTab === '使用统计'" class="tab-pane">
-        <div class="stats-card">
-          <div class="card-header">
-            <h3>使用数据</h3>
-          </div>
-          <div class="card-content">
-            <div class="info-item">
-              <span class="label">累计使用时长:</span>
-              <span class="value highlight">72小时</span>
-            </div>
-            <div class="info-item">
-              <span class="label">本月活跃天数:</span>
-              <span class="value">15天</span>
-            </div>
-            <div class="info-item">
-              <span class="label">最常用功能:</span>
-              <span class="value">快速绑定</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div v-if="activeTab === '其他数据'" class="tab-pane">
-        <div class="stats-card">
-          <div class="card-header">
-            <h3>其他统计</h3>
-          </div>
-          <div class="card-content">
-            <div class="info-item">
-              <span class="label">账号注册时间:</span>
-              <span class="value">2024-01-01</span>
-            </div>
-            <div class="info-item">
-              <span class="label">最近登录时间:</span>
-              <span class="value">2024-01-15</span>
-            </div>
-            <div class="info-item">
-              <span class="label">设备绑定数:</span>
-              <span class="value">1台</span>
-            </div>
-          </div>
-        </div>
+      <div v-if="activeTab === '其他'" class="tab-pane">
+        <p>The web page is in production....</p>
       </div>
     </div>
   </div>
@@ -294,9 +219,10 @@ const tabs = [
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
-</style> 
+</style>

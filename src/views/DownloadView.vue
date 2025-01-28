@@ -25,16 +25,16 @@ const tabs = [
 
     <div class="tab-content">
       <div v-if="activeTab === '1'" class="tab-pane">
-        <p>游戏下载内容1</p>
+        <p>The web page is in production....</p>
       </div>
       <div v-if="activeTab === '2'" class="tab-pane">
-        <p>游戏下载内容2</p>
+        <p>The web page is in production....</p>
       </div>
       <div v-if="activeTab === '3'" class="tab-pane">
-        <p>游戏下载内容3</p>
+        <p>The web page is in production....</p>
       </div>
       <div v-if="activeTab === '4'" class="tab-pane">
-        <p>游戏下载内容4</p>
+        <p>The web page is in production....</p>
       </div>
     </div>
   </div>
