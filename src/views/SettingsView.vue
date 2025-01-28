@@ -68,6 +68,14 @@ const tabs = [
   gap: 1rem;
   border-bottom: 2px solid #2f2f3d;
   padding-bottom: 0.5rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.tabs::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 .tab-btn {
@@ -79,6 +87,8 @@ const tabs = [
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
+  white-space: nowrap;
+  min-width: max-content;
 }
 
 .tab-btn::after {
@@ -99,6 +109,31 @@ const tabs = [
 
 .tab-btn.active::after {
   transform: scaleX(1);
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .tabs {
+    gap: 0.5rem;
+    padding: 0.5rem;
+    margin: 0 -0.5rem;
+  }
+
+  .tab-btn {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* 超小屏幕适配 */
+@media (max-width: 360px) {
+  .tabs {
+    gap: 0.25rem;
+  }
+
+  .tab-btn {
+    padding: 0.5rem;
+  }
 }
 
 .tab-content {

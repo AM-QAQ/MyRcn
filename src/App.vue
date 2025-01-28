@@ -1,17 +1,25 @@
 <script setup>
 import { RouterView, useRoute } from 'vue-router'
-import { computed, ref, watch } from 'vue'
+import { computed, ref, watch, onMounted } from 'vue'
 import TheSidebar from './components/TheSidebar.vue'
 
 const route = useRoute()
 const isCollapsed = ref(false)
+const isDark = ref(true)
+
+// 从本地存储加载主题设置
+onMounted(() => {
+  const savedTheme = localStorage.getItem('theme')
+  isDark.value = savedTheme === null ? true : savedTheme === 'dark'
+  applyTheme(isDark.value)
+})
 
 const currentTitle = computed(() => {
   const titles = {
     '/pro': 'Pro教程',
     '/game': '游戏教程',
     '/download': '游戏下载',
-    '/settings': '系统设置'
+    '/statistics': '数据统计'
   }
   return titles[route.path] || ''
 })
@@ -20,11 +28,26 @@ const currentTitle = computed(() => {
 const handleSidebarToggle = (collapsed) => {
   isCollapsed.value = collapsed
 }
+
+// 处理主题切换
+const handleThemeToggle = (dark) => {
+  isDark.value = dark
+  localStorage.setItem('theme', dark ? 'dark' : 'light')
+  applyTheme(dark)
+}
+
+// 应用主题
+const applyTheme = (dark) => {
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light')
+}
 </script>
 
 <template>
-  <div class="app-container">
-    <TheSidebar @toggle-sidebar="handleSidebarToggle"/>
+  <div :class="['app-container', isDark ? 'theme-dark' : 'theme-light']">
+    <TheSidebar 
+      @toggle-sidebar="handleSidebarToggle"
+      @toggle-theme="handleThemeToggle"
+    />
     <div :class="['main-wrapper', { 'collapsed': isCollapsed }]">
       <header class="title-bar">
         <h1 class="page-title">{{ currentTitle }}</h1>
@@ -39,10 +62,43 @@ const handleSidebarToggle = (collapsed) => {
 </template>
 
 <style>
+:root {
+  /* 暗色主题变量 */
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #13131a;
+  --bg-hover: rgba(99, 107, 251, 0.08);
+  --bg-active: rgba(99, 107, 251, 0.15);
+  --text-primary: #FFFFFF;
+  --text-secondary: #888888;
+  --border-color: #2f2f3d;
+  --accent-color: #636bfb;
+  --accent-hover: #8389ff;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --menu-hover: rgba(99, 107, 251, 0.08);
+  --menu-active: rgba(99, 107, 251, 0.15);
+}
+
+:root[data-theme="light"] {
+  /* 亮色主题变量 */
+  --bg-primary: #f8f9fa;
+  --bg-secondary: #ffffff;
+  --bg-hover: rgba(99, 107, 251, 0.05);
+  --bg-active: rgba(99, 107, 251, 0.1);
+  --text-primary: #2c3e50;
+  --text-secondary: #6c757d;
+  --border-color: #e9ecef;
+  --accent-color: #636bfb;
+  --accent-hover: #4a51e8;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --menu-hover: rgba(99, 107, 251, 0.05);
+  --menu-active: rgba(99, 107, 251, 0.1);
+}
+
 .app-container {
   min-height: 100vh;
   display: flex;
-  background-color: #0a0a0f;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 .main-wrapper {
@@ -55,10 +111,9 @@ const handleSidebarToggle = (collapsed) => {
   margin-left: 72px;
 }
 
-/* 标题栏 */
 .title-bar {
   height: 60px;
-  background-color: #13131a;
+  background-color: var(--bg-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -68,6 +123,7 @@ const handleSidebarToggle = (collapsed) => {
   top: 0;
   z-index: 50;
   transition: all 0.3s ease;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .main-wrapper.collapsed .title-bar {
@@ -77,7 +133,7 @@ const handleSidebarToggle = (collapsed) => {
 .page-title {
   font-size: 1.5rem;
   font-weight: 500;
-  color: #636bfb;
+  color: var(--accent-color);
   margin: 0;
 }
 
@@ -89,15 +145,14 @@ const handleSidebarToggle = (collapsed) => {
 }
 
 .content-container {
-  background-color: #13131a;
+  background-color: var(--bg-secondary);
   border-radius: 12px;
   padding: 2rem;
   min-height: calc(100vh - 60px - 4rem);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 16px var(--shadow-color);
   width: 100%;
   max-width: 800px;
-  color: #FFFFFF;
-  border: 1px solid #1f1f2b;
+  border: 1px solid var(--border-color);
 }
 
 /* 移动端适配 */
@@ -128,10 +183,6 @@ const handleSidebarToggle = (collapsed) => {
     padding: 1.5rem;
     min-height: calc(100vh - 60px - 2rem);
     max-width: 100%;
-  }
-
-  .mobile-toggle-btn {
-    background-color: #13131a;
   }
 }
 </style>

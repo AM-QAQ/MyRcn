@@ -1,12 +1,12 @@
 <script setup>
 import { ref } from 'vue'
 
-const activeTab = ref('1')
+const activeTab = ref('购买')
 const tabs = [
-  { id: 'tab1', label: '1' },
-  { id: 'tab2', label: '2' },
-  { id: 'tab3', label: '3' },
-  { id: 'tab4', label: '4' }
+  { id: 'tab1', label: '购买' },
+  { id: 'tab2', label: '使用' },
+  { id: 'tab3', label: '反馈' },
+  { id: 'tab4', label: '问题' }
 ]
 </script>
 
@@ -24,16 +24,16 @@ const tabs = [
     </div>
 
     <div class="tab-content">
-      <div v-if="activeTab === '1'" class="tab-pane">
+      <div v-if="activeTab === '购买'" class="tab-pane">
         <p>游戏教程内容1</p>
       </div>
-      <div v-if="activeTab === '2'" class="tab-pane">
+      <div v-if="activeTab === '使用'" class="tab-pane">
         <p>游戏教程内容2</p>
       </div>
-      <div v-if="activeTab === '3'" class="tab-pane">
+      <div v-if="activeTab === '反馈'" class="tab-pane">
         <p>游戏教程内容3</p>
       </div>
-      <div v-if="activeTab === '4'" class="tab-pane">
+      <div v-if="activeTab === '问题'" class="tab-pane">
         <p>游戏教程内容4</p>
       </div>
     </div>
@@ -52,6 +52,14 @@ const tabs = [
   gap: 1rem;
   border-bottom: 2px solid #2f2f3d;
   padding-bottom: 0.5rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.tabs::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 .tab-btn {
@@ -63,6 +71,8 @@ const tabs = [
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
+  white-space: nowrap;
+  min-width: max-content;
 }
 
 .tab-btn::after {
@@ -83,6 +93,31 @@ const tabs = [
 
 .tab-btn.active::after {
   transform: scaleX(1);
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .tabs {
+    gap: 0.5rem;
+    padding: 0.5rem;
+    margin: 0 -0.5rem;
+  }
+
+  .tab-btn {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* 超小屏幕适配 */
+@media (max-width: 360px) {
+  .tabs {
+    gap: 0.25rem;
+  }
+
+  .tab-btn {
+    padding: 0.5rem;
+  }
 }
 
 .tab-content {

@@ -1,12 +1,20 @@
 <script setup>
 import { ref } from 'vue'
+import sunIcon from '@/assets/img/theme/sun.png'
+import moonIcon from '@/assets/img/theme/moon.png'
 
 const isCollapsed = ref(false)
-const emit = defineEmits(['toggle-sidebar'])
+const isDark = ref(true) // 默认为暗黑模式
+const emit = defineEmits(['toggle-sidebar', 'toggle-theme'])
 
 const toggleSidebar = () => {
   isCollapsed.value = !isCollapsed.value
   emit('toggle-sidebar', isCollapsed.value)
+}
+
+const toggleTheme = () => {
+  isDark.value = !isDark.value
+  emit('toggle-theme', isDark.value)
 }
 
 // 侧边栏选项
@@ -14,7 +22,7 @@ const menuItems = [
   { icon: '🚀', label: 'Pro教程', route: '/pro' },
   { icon: '🎮', label: '游戏教程', route: '/game' },
   { icon: '⬇️', label: '游戏下载', route: '/download' },
-  { icon: '⚙️', label: '系统设置', route: '/settings' }
+  { icon: '📊', label: '数据统计', route: '/statistics' }
 ]
 </script>
 
@@ -34,7 +42,7 @@ const menuItems = [
           v-show="!isCollapsed"
         >
           <img src="@/assets/img/AMt.ico" alt="Logo" class="logo-img">
-          <span class="logo-text">MyRcn</span>
+          <span class="logo-text">MyRW</span>
         </a>
         <button class="toggle-btn" @click="toggleSidebar">
           <span class="toggle-icon">{{ isCollapsed ? '☰' : '×' }}</span>
@@ -54,6 +62,23 @@ const menuItems = [
           <span class="label" v-show="!isCollapsed">{{ item.label }}</span>
         </router-link>
       </nav>
+
+      <!-- 主题切换按钮 -->
+      <div class="theme-toggle">
+        <button 
+          class="theme-btn" 
+          @click="toggleTheme"
+        >
+          <span class="icon">
+            <img 
+              :src="isDark ? moonIcon : sunIcon" 
+              alt="theme" 
+              class="theme-icon"
+            >
+          </span>
+          <span class="label" v-show="!isCollapsed">系统主题</span>
+        </button>
+      </div>
     </aside>
 
     <!-- 移动端固定展开按钮 -->
@@ -86,11 +111,12 @@ const menuItems = [
   left: 0;
   top: 0;
   height: 100vh;
-  background-color: #13131a;
+  background-color: var(--bg-secondary);
   transition: all 0.3s ease;
   width: 240px;
   display: flex;
   flex-direction: column;
+  border-right: 1px solid var(--border-color);
 }
 
 .sidebar.collapsed {
@@ -121,7 +147,7 @@ const menuItems = [
   align-items: center;
   gap: 0.75rem;
   font-weight: bold;
-  color: #636bfb;
+  color: var(--accent-color);
   transition: all 0.3s ease;
   padding: 0.5rem;
   border-radius: 4px;
@@ -130,7 +156,7 @@ const menuItems = [
 }
 
 .logo:hover {
-  background-color: rgba(99, 107, 251, 0.05);
+  background-color: var(--bg-hover);
 }
 
 .logo:hover .logo-img {
@@ -157,7 +183,7 @@ const menuItems = [
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #FFFFFF;
+  color: var(--text-primary);
   transition: all 0.2s ease;
 }
 
@@ -171,7 +197,7 @@ const menuItems = [
 }
 
 .toggle-btn:hover {
-  background-color: rgba(99, 107, 251, 0.05);
+  background-color: var(--bg-hover);
   border-radius: 4px;
   transform: scale(1.1);
 }
@@ -195,7 +221,7 @@ const menuItems = [
   display: flex;
   align-items: center;
   padding: 0.75rem 1rem;
-  color: #FFFFFF;
+  color: var(--text-primary);
   text-decoration: none;
   transition: all 0.3s ease;
   gap: 0.75rem;
@@ -220,7 +246,7 @@ const menuItems = [
 
 .menu-item:hover::before {
   width: 100%;
-  background-color: rgba(99, 107, 251, 0.05);
+  background-color: var(--menu-hover);
 }
 
 .menu-item:hover .icon {
@@ -237,7 +263,7 @@ const menuItems = [
   position: relative;
   border-radius: 6px;
   margin: 0 0.5rem;
-  color: #646cff;
+  color: var(--accent-color);
 }
 
 .menu-item.active::before {
@@ -247,7 +273,7 @@ const menuItems = [
   top: 0;
   height: 100%;
   width: 3px;
-  background-color: #646CFF;
+  background-color: var(--accent-color);
   z-index: -1;
 }
 
@@ -258,7 +284,7 @@ const menuItems = [
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: rgba(100, 108, 255, 0.1);
+  background-color: var(--menu-active);
   z-index: -2;
   border-radius: 6px;
 }
@@ -294,19 +320,19 @@ const menuItems = [
     top: 1rem;
     width: 40px;
     height: 40px;
-    background-color: #0a0a0f;
-    border: none;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
     border-radius: 4px;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     z-index: 80;
-    color: #FFFFFF;
+    color: var(--text-primary);
     transition: all 0.2s ease;
   }
 
   .mobile-toggle-btn:hover {
-    background-color: rgba(99, 107, 251, 0.05);
+    background-color: var(--bg-hover);
     transform: scale(1.1);
   }
 
@@ -349,11 +375,77 @@ const menuItems = [
 }
 
 .menu::-webkit-scrollbar-thumb {
-  background-color: var(--color-border);
+  background-color: var(--border-color);
   border-radius: 2px;
 }
 
 .menu::-webkit-scrollbar-thumb:hover {
-  background-color: var(--color-text);
+  background-color: var(--text-secondary);
+}
+
+.theme-toggle {
+  padding: 0;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.theme-toggle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 1rem;
+  right: 1rem;
+  height: 2px;
+  background-color: #2f2f3d;
+  opacity: 1;
+}
+
+.theme-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1rem 0 0 0;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.theme-btn .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.theme-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+/* 侧边栏收缩状态下的样式 */
+.sidebar.collapsed .theme-toggle::before {
+  left: 1rem;
+  right: 1rem;
+}
+
+.sidebar.collapsed .theme-btn {
+  justify-content: center;
+  padding: 0.75rem 0;
+}
+
+/* 移动端适配主题按钮 */
+@media (max-width: 768px) {
+  .theme-toggle {
+    margin-bottom: 0.75rem;
+  }
+
+  .theme-btn {
+    margin: 0.75rem 0 0 0;
+  }
 }
 </style> 

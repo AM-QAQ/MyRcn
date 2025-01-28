@@ -32,11 +32,11 @@ const router = createRouter({
       }
     },
     {
-      path: '/settings',
-      name: 'Settings',
-      component: () => import('@/views/SettingsView.vue'),
+      path: '/statistics',
+      name: 'Statistics',
+      component: () => import('@/views/StatisticsView.vue'),
       meta: {
-        title: 'MyRcn - 系统设置'
+        title: 'MyRcn - 数据统计'
       }
     }
   ]
